@@ -185,7 +185,7 @@ export default function Home() {
               <div className="flex justify-end px-4 mb-4">
                 <button
                   onClick={() => setSortOrder(sortOrder === "desc" ? "asc" : "desc")}
-                  className="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600"
+                  className="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
                 >
                   Sort: {sortOrder === "desc" ? "Newest First" : "Oldest First"}
                 </button>
