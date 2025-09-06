@@ -4,12 +4,22 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Home() {
   const [date, setDate] = useState(new Date());
   const [form, setForm] = useState({ description: "", category: "", transactionType: "", amount: "" })
   const [transactions, setTransactions] = useState([])
-  const [operator, setOperator] = useState("+")
+  const [sortOrder, setSortOrder] = useState("desc");
+
+  const sortedTransactions = [...transactions].sort((a, b) => {
+    const [dayA, monthA, yearA] = a.date.split("/")
+    const [dayB, monthB, yearB] = b.date.split("/")
+
+    const dateA = new Date(yearA, monthA - 1, dayA)
+    const dateB = new Date(yearB, monthB - 1, dayB)
+    return sortOrder === "desc" ? dateB - dateA : dateA - dateB
+  })
 
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -42,6 +52,9 @@ export default function Home() {
       amount: Number(form.transactionType === "income" ? form.amount : -form.amount),
     }
     setTransactions([...transactions, newTransaction])
+    if (transactions) {
+      toast.success("Transaction added successfully!")
+    }
 
     setForm({ description: "", category: "", transactionType: "", amount: "" })
     setDate(new Date())
@@ -84,6 +97,7 @@ export default function Home() {
 
   return (
     <main className="min-h-[calc(100vh-60px)] mt-[80px] sm:mt-[70px]">
+      <ToastContainer />
       <section className="max-w-7xl mx-auto mb-10">
         <div id="home">
           <h1 className="text-3xl sm:text-4xl text-center font-bold text-gray-900 my-4 mb-8 ">Expense Tracker</h1>
@@ -168,8 +182,16 @@ export default function Home() {
           <div id="history" className="flex flex-col border border-gray-200 py-6 bg-white shadow-md">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-6">Transaction History</h2>
             {transactions.length !== 0 ? <>
+              <div className="flex justify-end px-4 mb-4">
+                <button
+                  onClick={() => setSortOrder(sortOrder === "desc" ? "asc" : "desc")}
+                  className="px-3 py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600"
+                >
+                  Sort: {sortOrder === "desc" ? "Newest First" : "Oldest First"}
+                </button>
+              </div>
               <div className="flex sm:hidden flex-col gap-4">
-                {transactions.map((item, index) => {
+                {sortedTransactions.map((item, index) => {
                   return <div key={item.id} className="flex flex-col justify-center gap-1 bg-slate-100 border-1 mx-4 rounded-lg border-gray-500 p-4">
                     <div className="font-bold">Date: <span className="text-gray-900 font-normal">{item.date}</span></div>
                     <div className="font-bold">Description: <span className="text-gray-900 font-normal">{item.description}</span></div>
@@ -196,7 +218,14 @@ export default function Home() {
                         </lord-icon>
                       </span>
                       <span className="flex items-center justify-center gap-1 p-1 px-3 bg-red-400 rounded-full cursor-pointer text-gray-800"
-                        onClick={() => setTransactions(transactions.filter((e, i) => i !== index))}
+                        onClick={() => {
+                          const verify = confirm("Are you sure to delete the transaction?")
+                          if (verify) {
+                            setTransactions(transactions.filter((e, i) => i !== index))
+                            toast.success("Deleted successfully!")
+                          }
+                        }
+                        }
                       >
                         Delete
                         <lord-icon
@@ -222,7 +251,7 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.map((transaction, index) => {
+                  {sortedTransactions.map((transaction, index) => {
                     return (
                       <tr key={transaction.id}>
                         <td className="text-center border border-gray-300 px-2 py-1">{transaction.date}</td>
@@ -251,8 +280,14 @@ export default function Home() {
                               </lord-icon>
                             </span>
                             <span onClick={() => {
-                              setTransactions(transactions.filter((e, i) => i !== index));
-                            }}>
+                              const verify = confirm("Are you sure to delete the transaction?")
+                              if (verify) {
+                                setTransactions(transactions.filter((e, i) => i !== index))
+                                toast.success("Deleted successfully!")
+                              }
+                            }
+                            }
+                            >
                               <lord-icon
                                 src="https://cdn.lordicon.com/jzinekkv.json"
                                 trigger="hover"
