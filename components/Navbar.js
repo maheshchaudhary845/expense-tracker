@@ -9,7 +9,7 @@ const Navbar = () => {
                 <div className="logo text-xl font-bold flex items-center justify-center gap-1"><Image width={25} height={25} src="/money.png" alt="money-icon" /> Expense Tracker</div>
                 <ul className="flex gap-4 font-semibold">
                     <li><button className="cursor-pointer" onClick={() => document.getElementById("home").scrollIntoView({ behavior: "smooth" })}>Home</button></li>
-                    <li className="whitespace-nowrap"><button onClick={() => document.getElementById("add-transaction").scrollIntoView({ behavior: "smooth" })}>Add Transaction</button></li>
+                    <li className="whitespace-nowrap"><button className="cursor-pointer" onClick={() => document.getElementById("add-transaction").scrollIntoView({ behavior: "smooth" })}>Add Transaction</button></li>
                     <li><button className="cursor-pointer" onClick={() => document.getElementById("history").scrollIntoView({ behavior: "smooth" })}>History</button></li>
                     <li><button className="cursor-pointer" onClick={() => document.getElementById("chart").scrollIntoView({ behavior: "smooth" })}>Chart</button></li>
                 </ul>
