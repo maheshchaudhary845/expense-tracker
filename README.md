@@ -32,3 +32,26 @@ It helps you keep track of **income and expenses**, shows your **balance summary
 - 📅 [React-DatePicker](https://reactdatepicker.com/)  
 
 ---
+
+## ⚙️ Installation  
+
+1. Clone the repo:  
+   ```bash
+   git clone https://github.com/your-username/expense-tracker.git
+   cd expense-tracker
+   ```
+
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
+3. Run the dev server:
+    ```bash
+    npm run dev
+    ```
+4. Open in browser:
+    ```bash
+    http://localhost:3000
+    ```
+
+Made with ❤️ by Mahesh Chaudhary
