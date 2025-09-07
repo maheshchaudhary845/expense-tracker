@@ -36,8 +36,12 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(isNaN(form.amount)){
+      toast.error("Please enter valid amount!")
+      return;
+    }
     if (!date || !form.description || !form.category || !form.amount) {
-      alert("Please fill all fields")
+      toast.warn("Please fill all the fields")
       return;
     }
 
