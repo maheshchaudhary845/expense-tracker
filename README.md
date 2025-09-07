@@ -54,4 +54,7 @@ It helps you keep track of **income and expenses**, shows your **balance summary
     http://localhost:3000
     ```
 
-Made with ❤️ by Mahesh Chaudhary
+## 🛜 Live Server (Deployed on Vercel)
+https://expense-tracker-livid-ten.vercel.app/
+
+### Made with ❤️ by Mahesh Chaudhary
